@@ -1,0 +1,56 @@
+.container {
+  margin:0 auto;
+  width: 800px;
+  height: 800px;
+  background-color:grey;
+  text-align: center;
+}
+
+.table {
+  background-color: green;
+  margin: 0 auto;
+  width: 600px;
+  height: 600px;
+  display: inline-block;
+  position:relative
+
+}
+.computer {
+  position:absolute;
+  top:10px;
+  left:150px;
+}
+
+.player1 {
+  position:absolute;
+  bottom:100px;
+  left:150px;
+}
+
+.cards {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  border: 10px solid black;
+  display:inline-block;
+
+}
+.controls {
+position:absolute;
+bottom:10px;
+left:100px;
+text-align:center;
+
+}
+button {
+ background-color: blue;
+ color:black;
+ font-family: Josefin Slab;
+ font-size: 20px;
+ text-align: center;
+ border: 1px solid black;
+ margin: 10px;
+ padding: 5px 10px;
+ border-radius: 5px;
+ box-shadow: 2px 2px black;
+}
