@@ -1,56 +1,72 @@
+body {
+  height: 100vh;
+  width:100vw;
+  background: url('../img/table.png');
+  background-size: cover;
+  /*position:absolute;
+  margin: 0 auto;*/
+}
+
+h1{
+  left: 40.5%;
+  color:white;
+  text-align: center;
+  position:absolute;
+  display:block;
+}
+
 .container {
   margin:0 auto;
-  width: 800px;
-  height: 800px;
-  background-color:grey;
+  /*background: blue;*/
+  width: 80%;
+  height: 98%;
   text-align: center;
+  position: relative;
 }
 
 .table {
-  background-color: green;
-  margin: 0 auto;
-  width: 600px;
-  height: 600px;
-  display: inline-block;
-  position:relative
-
+  margin:0 auto;
+  /*background: white;*/
+  width: 65%;
+  height: 100%;
+  text-align: center;
+  position: relative;
 }
+
 .computer {
-  position:absolute;
-  top:10px;
-  left:150px;
+  position:relative;
+  top: 9%;
 }
 
 .player1 {
-  position:absolute;
-  bottom:100px;
-  left:150px;
+  position:relative;
+  top:50%;
 }
 
 .cards {
-  width: 100px;
+  width: 75px;
   height: 100px;
   background-color: red;
-  border: 10px solid black;
+  border: 3px solid black;
   display:inline-block;
-
+  /*position:relative;*/
 }
+
 .controls {
 position:absolute;
 bottom:10px;
-left:100px;
+left:200px;
 text-align:center;
-
 }
+
 button {
- background-color: blue;
+ background-color: yellow;
  color:black;
  font-family: Josefin Slab;
  font-size: 20px;
- text-align: center;
  border: 1px solid black;
- margin: 10px;
- padding: 5px 10px;
+ margin: 0 auto;
+ padding: 5px 25px;
  border-radius: 5px;
  box-shadow: 2px 2px black;
 }

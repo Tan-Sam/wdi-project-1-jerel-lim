@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-
-
-
   function Game () {
     this.currentPlayer = 0
     this.isGameOver = false
@@ -12,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   Game.prototype.newGame = function () { // 2 player game with 1 AI
     this.player.push(new Player(), new Player())
     console.log(game.player[0].cards)
-      console.log(game.player[0].cardscore)
+    console.log(game.player[0].cardscore)
     console.log(game.player[1].cards)
     console.log(game.player[1].cardscore)
     this.blackJack()
@@ -28,47 +25,53 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   Game.prototype.restart = function () {
-    this.currentPlayer = 0
-    this.isGameOver = false
-    this.player = []
-    this.knownCards = []
-    this.newGame()
-  }
+
+    setTimeout(function () {
+      if (confirm("Play again?")) {
+        this.currentPlayer = 0
+        this.isGameOver = false
+        this.player = []
+        this.knownCards = []
+        this.newGame()
+        var newCards = document.querySelectorAll('.newCards')
+        for (var i = 0; i < newCards.length; i++) {
+          newCards[i].parentNode.removeChild(newCards[i])
+      }
+    }
+      else {
+     alert('Have a good day!')
+      }
+    }.bind(this), 1300)
+}
 
   Game.prototype.whoWon = function () {
-
     if (this.player[0].cardscore > 21) {
-      alert('Computer Won!')
+      setTimeout(function () { alert('Computer Won!') }, 1300)
+    game.restart()
     } else if (this.player[1].cardscore > 21) {
-      alert('You Won!')
-    } else if (this.player[1].cardscore > this.player[0].cardscore) {
-      alert('Computer Won!')
-    } else if (this.player[0].cardscore > this.player[1].cardscore) {
-      alert('You Won!')
-    } else {
-      alert('It\'s a tie')
-    }
+      setTimeout(function () { alert('You Won!') }, 1300)
       game.restart()
-
+    } else if (this.player[1].cardscore > this.player[0].cardscore) {
+      setTimeout(function () { alert('Computer Won!') }, 1300)
+      game.restart()
+    } else if (this.player[0].cardscore > this.player[1].cardscore) {
+      setTimeout(function () { alert('You Won!') }, 1300)
+      game.restart()
+    } else {
+      setTimeout(function () { alert('It\'s a tie!') }, 1300)
+      game.restart()
+    }
   }
 
-Game.prototype.blackJack = function(){
-  if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21) {
-    alert('You Won!')
-    game.restart()
-  } else if (this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
-    alert('Computer Won!')
-    game.restart()
+  Game.prototype.blackJack = function () {
+    if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21 && this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
+      alert('It\'s a tie!')
+    } else if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21) {
+      alert('You Won!')
+    } else if (this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
+      alert('Computer Won!')
+    }
   }
-
-}
-  //
-  // Game.prototype.checkGameOver = function () {
-  //   if (this.player[game.currentPlayer].cards.length === 0 ) {
-  //     this.isGameOver = true
-  //   }
-  //   return this.isGameOver
-  // }
 
   function Card (suit, rank) {
     this.suit = suit // 1-clubs, 2-diamonds,3-hearts,4-spades
@@ -80,15 +83,14 @@ Game.prototype.blackJack = function(){
     this.cards = [deal(), deal()]
     this.pass = false
     this.cardscore = this.score()
-
   }
-  var deal = function() { //general action of dealing
+  var deal = function () { // general action of dealing
     var card = Math.floor(Math.random() * 52 + 1)
     var rank = card % 13 + 1
     var suit = card % 4 + 1
     return new Card(suit, rank)
   }
-  Player.prototype.pass = function() {
+  Player.prototype.pass = function () {
     this.pass = true
     return this.pass
   }
@@ -99,16 +101,15 @@ Game.prototype.blackJack = function(){
   }
 
   Player.prototype.score = function () {
-      var arrayValue = this.cards.map(function (card) {
-        return value(card.rank)
-      })
-      var score = arrayValue.reduce(function (accu, val) {
-        return accu + val
-      })
-      this.cardscore = score
-      return this.cardscore
-      console.log(this + arrayValue)
-    }
+    var arrayValue = this.cards.map(function (card) {
+      return value(card.rank)
+    })
+    var score = arrayValue.reduce(function (accu, val) {
+      return accu + val
+    })
+    this.cardscore = score
+    return this.cardscore
+  }
 
   function value (rank) {
     if (rank === 11 || rank === 12 || rank === 13) {
@@ -120,60 +121,61 @@ Game.prototype.blackJack = function(){
     }
   }
 
-  function addCard(){
-    console.log('clicked addcard')
-    var newCard = document.createElement('div')
-    var player1Div = document.querySelector('.player1')
-    newCard.classList += "cards"
-    player1Div.appendChild(newCard)
-    game.player[game.currentPlayer].hit()
+  var addCard = function () {
+    if (game.currentPlayer === 0) {
+      var newCard = document.createElement('div')
+      var player1Div = document.querySelector('.player1')
+      newCard.classList.add('cards', 'newCards')
+      player1Div.appendChild(newCard)
+      game.player[game.currentPlayer].hit()
+    } else {
+      console.log('computer card added')
+      var newComputerCard = document.createElement('div')
+      var computerDiv = document.querySelector('.computer')
+      newComputerCard.classList.add('cards', 'newCards')
+      computerDiv.appendChild(newComputerCard)
+      console.log(computerDiv)
+      console.log(newComputerCard)
+      game.player[game.currentPlayer].hit()
     }
+  }
 
-    function pass(){
-      console.log('clicked pass')
-      game.player[game.currentPlayer].pass = true
-      game.switchPlayer()
-      console.log(game)
-      }
-  //
-  // var computer = new Player('Computer')
-  // var player1 = new Player('Joe') // have to link new player function to button
-  var buttonAdd = document.querySelector(".add")
-  var buttonPass = document.querySelector(".pass")
+  function pass () {
+    console.log('clicked pass')
+    game.player[game.currentPlayer].pass = true
+    game.switchPlayer()
+    console.log(game)
+  }
+
+  var buttonAdd = document.querySelector('.add')
+  var buttonPass = document.querySelector('.pass')
   var game = new Game()
 
-  // console.log(game)
   game.newGame()
-    console.log(game)
+  console.log(game)
   //
   //
   //
   buttonAdd.addEventListener('click', addCard)
   buttonPass.addEventListener('click', pass)
 
-
-
-
   function computerAI () {
     while (game.currentPlayer !== 0) {
       if (game.player[game.currentPlayer].cardscore < 16) {
-        game.player[game.currentPlayer].hit()
-        }
-      else {
+        addCard()
+      } else {
+        console.log('the other else')
         game.whoWon()
         game.isGameOver = true
         return game.isGameOver
-        console.log(game)
-        }
       }
-
+    }
   }
 
   console.log(game.player[0].cards)
-    console.log(game.player[0].cardscore)
+  console.log(game.player[0].cardscore)
   console.log(game.player[1].cards)
   console.log(game.player[1].cardscore)
-
 
   //
   //
