@@ -1,19 +1,45 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+  var buttonAdd = document.querySelector('.add')
+  var buttonPass = document.querySelector('.pass')
+  var buttonBet = document.querySelector('.bet')
+  var game = new Game()
+  var player1Cards = document.querySelectorAll(".player1 .cards")
+  var computerCards = document.querySelectorAll(".computer .cards")
+  var betAmount = document.querySelector('input').value
+
   function Game () {
     this.currentPlayer = 0
     this.isGameOver = false
     this.player = []
-    this.knownCards = []
   }
 
-  Game.prototype.newGame = function () { // 2 player game with 1 AI
+function displayCards(player,num,div){
+  for (var j=1; j<53; j++){
+    if (game.player[player].cards[num].card === j){
+      div[num].setAttribute("style","background-image: url('./assets/img/playing-cards-assets/png/"+ j +'.png')}
+  }
+}
+
+function removeDisplay(player,num,div){
+  player1Cards[0].removeAttribute("style")
+  player1Cards[1].removeAttribute("style")
+  computerCards[0].removeAttribute("style")
+  computerCards[1].removeAttribute('style')
+}
+
+  Game.prototype.newGame = function () {
+
     this.player.push(new Player(), new Player())
-    console.log(game.player[0].cards)
-    console.log(game.player[0].cardscore)
-    console.log(game.player[1].cards)
-    console.log(game.player[1].cardscore)
+    this.player[this.currentPlayer].bet()
+displayCards(0,1,player1Cards)
+displayCards(0,0,player1Cards)
+displayCards(1,0,computerCards)
     this.blackJack()
   }
+
+
+
 
   Game.prototype.switchPlayer = function () {
     if (this.currentPlayer === 0 && this.player[0].pass === 'false') {
@@ -28,11 +54,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setTimeout(function () {
       if (confirm("Play again?")) {
+        removeDisplay()
         this.currentPlayer = 0
         this.isGameOver = false
         this.player = []
         this.knownCards = []
         this.newGame()
+        computerCards[1].setAttribute('id', 'hide')
         var newCards = document.querySelectorAll('.newCards')
         for (var i = 0; i < newCards.length; i++) {
           newCards[i].parentNode.removeChild(newCards[i])
@@ -47,33 +75,50 @@ document.addEventListener('DOMContentLoaded', function () {
   Game.prototype.whoWon = function () {
     if (this.player[0].cardscore > 21) {
       setTimeout(function () { alert('Computer Won!') }, 1300)
+      this.player[0].credits = this.player[0].credits - this.player[0].betAmount
     game.restart()
+    return this.player[0].credits
     } else if (this.player[1].cardscore > 21) {
       setTimeout(function () { alert('You Won!') }, 1300)
+      this.player[0].credits = this.player[0].credits + this.player[0].betAmount
       game.restart()
+      return this.player[0].credits
     } else if (this.player[1].cardscore > this.player[0].cardscore) {
       setTimeout(function () { alert('Computer Won!') }, 1300)
+      this.player[0].credits = this.player[0].credits - this.player[0].betAmount
       game.restart()
+      return this.player[0].credits
     } else if (this.player[0].cardscore > this.player[1].cardscore) {
       setTimeout(function () { alert('You Won!') }, 1300)
+      this.player[0].credits = this.player[0].credits + this.player[0].betAmount
       game.restart()
+      return this.player[0].credits
     } else {
       setTimeout(function () { alert('It\'s a tie!') }, 1300)
       game.restart()
+      return this.player[0].credits
     }
   }
 
   Game.prototype.blackJack = function () {
     if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21 && this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
-      alert('It\'s a tie!')
+      setTimeout(function () { alert('It\'s a tie!') }, 1300)
+      displayCards(1,1,computerCards)
+      game.restart()
     } else if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21) {
-      alert('You Won!')
+      setTimeout(function () { alert('You Won!') }, 1300)
+      displayCards(1,1,computerCards)
+      game.restart()
     } else if (this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
-      alert('Computer Won!')
+      setTimeout(function () { alert('Computer Won!') }, 1300)
+      displayCards(1,1,computerCards)
+      game.restart()
     }
+
   }
 
-  function Card (suit, rank) {
+  function Card (card, suit, rank) {
+    this.card = card //random number from 1-52
     this.suit = suit // 1-clubs, 2-diamonds,3-hearts,4-spades
     this.rank = rank  // 1-13, ace = 1, j = 11, q = 12, k = 13
   }
@@ -82,14 +127,18 @@ document.addEventListener('DOMContentLoaded', function () {
     this.name = name
     this.cards = [deal(), deal()]
     this.pass = false
+    this.credits = 1000
     this.cardscore = this.score()
   }
   var deal = function () { // general action of dealing
     var card = Math.floor(Math.random() * 52 + 1)
-    var rank = card % 13 + 1
-    var suit = card % 4 + 1
-    return new Card(suit, rank)
+    var rank = card % 13
+    var suit = card % 4
+    return new Card(card, suit, rank)
   }
+
+
+
   Player.prototype.pass = function () {
     this.pass = true
     return this.pass
@@ -97,7 +146,18 @@ document.addEventListener('DOMContentLoaded', function () {
   Player.prototype.hit = function () {
     this.cards.push(deal())
     this.score()
-    console.log(this)
+  }
+
+  Player.prototype.bet = function (){
+
+  // var betAmount = prompt("What's your bet? You have "+this.credits +' credits currently');
+  //   while (betAmount > game.player[game.currentPlayer].credits ){
+  //     alert('Bet amount is more than what you currently have, please enter another bet amount.')
+  //     var betAmount = prompt("What's your bet?");
+  //   }
+      // this.betAmount = betAmount
+  console.log('play game')
+
   }
 
   Player.prototype.score = function () {
@@ -112,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function value (rank) {
-    if (rank === 11 || rank === 12 || rank === 13) {
+    if (rank === 11 || rank === 12 || rank === 0) {
       return 10
     } else if (rank === 1) {
       return 11
@@ -121,56 +181,52 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  var addCard = function () {
-    if (game.currentPlayer === 0) {
-      var newCard = document.createElement('div')
-      var player1Div = document.querySelector('.player1')
-      newCard.classList.add('cards', 'newCards')
-      player1Div.appendChild(newCard)
-      game.player[game.currentPlayer].hit()
-    } else {
-      console.log('computer card added')
-      var newComputerCard = document.createElement('div')
-      var computerDiv = document.querySelector('.computer')
-      newComputerCard.classList.add('cards', 'newCards')
-      computerDiv.appendChild(newComputerCard)
-      console.log(computerDiv)
-      console.log(newComputerCard)
-      game.player[game.currentPlayer].hit()
-    }
-  }
-
-  function pass () {
-    console.log('clicked pass')
-    game.player[game.currentPlayer].pass = true
-    game.switchPlayer()
-    console.log(game)
-  }
-
-  var buttonAdd = document.querySelector('.add')
-  var buttonPass = document.querySelector('.pass')
-  var game = new Game()
-
-  game.newGame()
-  console.log(game)
-  //
-  //
-  //
-  buttonAdd.addEventListener('click', addCard)
-  buttonPass.addEventListener('click', pass)
-
   function computerAI () {
+    displayCards(1,1,computerCards)
+    computerCards[1].removeAttribute('id')
     while (game.currentPlayer !== 0) {
       if (game.player[game.currentPlayer].cardscore < 16) {
         addCard()
       } else {
-        console.log('the other else')
         game.whoWon()
         game.isGameOver = true
         return game.isGameOver
       }
     }
   }
+
+  var addCard = function () {
+    if (game.currentPlayer === 0) {
+      var player1Div = document.querySelector('.player1')
+      var newCard = document.createElement('div')
+      newCard.classList.add('cards', 'newCards')
+      player1Div.appendChild(newCard)
+      game.player[game.currentPlayer].hit()
+      var player1Cards = document.querySelectorAll('.player1 .cards')
+      displayCards(0,player1Cards.length-1,player1Cards)
+    } else {
+      var computerDiv = document.querySelector('.computer')
+      var newComputerCard = document.createElement('div')
+      newComputerCard.classList.add('cards', 'newCards')
+      computerDiv.appendChild(newComputerCard)
+      game.player[game.currentPlayer].hit()
+      var computerCards = document.querySelectorAll('.computer .cards')
+      displayCards(1,computerCards.length-1,computerCards)
+    }
+  }
+
+  function pass () {
+    game.player[game.currentPlayer].pass = true
+    game.switchPlayer()
+  }
+
+
+  game.newGame()
+  console.log(game)
+
+  buttonAdd.addEventListener('click', addCard)
+  buttonPass.addEventListener('click', pass)
+  buttonBet.addEventListener('click', game.player[game.currentPlayer].bet())
 
   console.log(game.player[0].cards)
   console.log(game.player[0].cardscore)
@@ -182,76 +238,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // }
 //
-//
-//
-// var player1Score = value1 + value2
-// console.log(player1Score)
-//
-
-//
-//   var totalMoves = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-//   var player = 1
-//
-//   function restart () {
-//     totalMoves = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-//     player = 1
-//     $('.box').html('')
-//   }
-//
-//   function isGameOver () {
-//     console.log('gameover was called')
-//     if (whoWon()) {
-//       restart()
-//       return true
-//     }
-//     return false
-//   }
-//
-//   function whoWon () {
-//     console.log('whoWon was called')
-//     if (totalMoves[0] === totalMoves[1] && totalMoves[0] === totalMoves[2] && totalMoves[0]) {
-//       alert(totalMoves[0] + 'won')
-//       return totalMoves[0]
-//     } else if (totalMoves[3] === totalMoves[4] && totalMoves[3] === totalMoves[5] && totalMoves[3]) {
-//       alert(totalMoves[3] + 'won')
-//       return totalMoves[3]
-//     } else if (totalMoves[6] === totalMoves[7] && totalMoves[6] === totalMoves[8] && totalMoves[6]) {
-//       alert(totalMoves[6] + 'won')
-//       return totalMoves[6]
-//     } else if (totalMoves[0] === totalMoves[3] && totalMoves[0] === totalMoves[6] && totalMoves[0]) {
-//       alert(totalMoves[0] + 'won')
-//       return totalMoves[0]
-//     } else if (totalMoves[1] === totalMoves[4] && totalMoves[1] === totalMoves[7] && totalMoves[1]) {
-//       alert(totalMoves[1] + 'won')
-//       return totalMoves[1]
-//     } else if (totalMoves[2] === totalMoves[5] && totalMoves[2] === totalMoves[8] && totalMoves[2]) {
-//       alert(totalMoves[2] + 'won')
-//       return totalMoves[2]
-//     } else if (totalMoves[0] === totalMoves[4] && totalMoves[0] === totalMoves[8] && totalMoves[0]) {
-//       alert(totalMoves[0] + 'won')
-//       return totalMoves[0]
-//     } else if (totalMoves[2] === totalMoves[4] && totalMoves[2] === totalMoves[6] && totalMoves[2]) {
-//       alert(totalMoves[2] + 'won')
-//       return totalMoves[2]
-//     } else if (totalMoves[0] !== 0 && totalMoves[1] !== 0 && totalMoves[2] !== 0 && totalMoves[3] !== 0 && totalMoves[4] !== 0 &&
-//     totalMoves[5] !== 0 && totalMoves[6] !== 0 && totalMoves[7] !== 0 && totalMoves[8] !== 0) {
-//       alert('it is a draw')
-//       return 3
-//     } else return 0
-//   }
-//
-//   function playTurn (moves) {
-//     if (totalMoves[moves] !== 0 || isGameOver() && moves > totalMoves.length) {
-//       return false
-//     } else {
-//       totalMoves[moves] = player
-//       if (player === 1) { player = 2 } else { player = 1 }
-//       return true
-//     }
-//   }
-//
-//   function changeTurnText () {
-//     $('h2').toggle()
-//   }
-// })
 })
