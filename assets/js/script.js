@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+//bet function
   var buttonAdd = document.querySelector('.add')
   var buttonPass = document.querySelector('.pass')
   var buttonBet = document.querySelector('.bet')
@@ -73,12 +74,7 @@ displayCards(1,0,computerCards)
 }
 
   Game.prototype.whoWon = function () {
-    if (this.player[0].cardscore > 21) {
-      setTimeout(function () { alert('Computer Won!') }, 1300)
-      this.player[0].credits = this.player[0].credits - this.player[0].betAmount
-    game.restart()
-    return this.player[0].credits
-    } else if (this.player[1].cardscore > 21) {
+    if (this.player[1].cardscore > 21) {
       setTimeout(function () { alert('You Won!') }, 1300)
       this.player[0].credits = this.player[0].credits + this.player[0].betAmount
       game.restart()
@@ -146,6 +142,20 @@ displayCards(1,0,computerCards)
   Player.prototype.hit = function () {
     this.cards.push(deal())
     this.score()
+    this.cards.forEach(function(card){
+      console.log(this.cardscore)
+      if(card.rank === 1 && this.cardscore >21) {
+        console.log(card.rank)
+        console.log(this.cardscore)
+        this.cardscore = this.cardscore -10
+        console.log(this.cardscore)
+      }
+    }.bind(this))
+    if (this.cardscore > 21) {
+        setTimeout(function () { alert('Computer Won!') }, 300)
+        this.credits = this.credits - this.betAmount
+      game.restart()
+      return this.credits}
   }
 
   Player.prototype.bet = function (){
@@ -156,6 +166,7 @@ displayCards(1,0,computerCards)
   //     var betAmount = prompt("What's your bet?");
   //   }
       // this.betAmount = betAmount
+
   console.log('play game')
 
   }
@@ -167,9 +178,15 @@ displayCards(1,0,computerCards)
     var score = arrayValue.reduce(function (accu, val) {
       return accu + val
     })
-    this.cardscore = score
-    return this.cardscore
-  }
+        this.cardscore = score
+        return this.cardscore
+
+
+// if (this.cards.rank === 1 && score >21){
+    //     this.cardscore = score - 10
+    // }
+
+}
 
   function value (rank) {
     if (rank === 11 || rank === 12 || rank === 0) {
