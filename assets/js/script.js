@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function displayCards(player,num,div){
   for (var j=1; j<53; j++){
     if (game.player[player].cards[num].card === j){
-      div[num].setAttribute("style","background-image: url('./assets/cards img/"+ j +'.png')}
+      div[num].setAttribute("style","background-image: url('./assets/cards-img/"+ j +'.png')}
   }
 }
 
