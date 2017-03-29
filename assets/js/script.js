@@ -118,10 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21 && this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
       setTimeout(function () { alert('It\'s a tie!') }, 1300)
       displayCards(1, 1, computerCards)
-<<<<<<< HEAD
-=======
       computerCards[1].removeAttribute('id')
->>>>>>> master
       updateCredits()
       game.restart()
       game.credits = game.credits
@@ -130,10 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21) {
       setTimeout(function () { alert('You Won!') }, 1300)
       displayCards(1, 1, computerCards)
-<<<<<<< HEAD
-=======
       computerCards[1].removeAttribute('id')
->>>>>>> master
       game.credits = game.credits + game.betAmount
       updateCredits()
       game.restart()
@@ -142,10 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
       setTimeout(function () { alert('Computer Won!') }, 1300)
       displayCards(1, 1, computerCards)
-<<<<<<< HEAD
-=======
       computerCards[1].removeAttribute('id')
->>>>>>> master
       game.credits = game.credits - game.betAmount
       updateCredits()
       game.restart()
