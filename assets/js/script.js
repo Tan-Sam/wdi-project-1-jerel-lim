@@ -7,12 +7,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var game = new Game()
   var player1Cards = document.querySelectorAll(".player1 .cards")
   var computerCards = document.querySelectorAll(".computer .cards")
-  var betAmount = document.querySelector('input').value
-
+  // var creditsLeft = document.querySelector("h1")
+// console.log(creditsLeft)
   function Game () {
     this.currentPlayer = 0
     this.isGameOver = false
     this.player = []
+    // this.credits = 1000
   }
 
 function displayCards(player,num,div){
@@ -32,7 +33,7 @@ function removeDisplay(player,num,div){
   Game.prototype.newGame = function () {
 
     this.player.push(new Player(), new Player())
-    this.player[this.currentPlayer].bet()
+    // this.player[this.currentPlayer].bet()
 displayCards(0,1,player1Cards)
 displayCards(0,0,player1Cards)
 displayCards(1,0,computerCards)
@@ -76,23 +77,27 @@ displayCards(1,0,computerCards)
   Game.prototype.whoWon = function () {
     if (this.player[1].cardscore > 21) {
       setTimeout(function () { alert('You Won!') }, 1300)
-      this.player[0].credits = this.player[0].credits + this.player[0].betAmount
+      // game.credits = game.credits + betAmount
+      // updateCredits()
       game.restart()
-      return this.player[0].credits
+      // return this.player[0].credits
     } else if (this.player[1].cardscore > this.player[0].cardscore) {
       setTimeout(function () { alert('Computer Won!') }, 1300)
-      this.player[0].credits = this.player[0].credits - this.player[0].betAmount
+      // game.credits = game.credits - betAmount
+      // updateCredits()
       game.restart()
-      return this.player[0].credits
+      // return this.player[0].credits
     } else if (this.player[0].cardscore > this.player[1].cardscore) {
       setTimeout(function () { alert('You Won!') }, 1300)
-      this.player[0].credits = this.player[0].credits + this.player[0].betAmount
+      // game.credits = game.credits + betAmount
+      // updateCredits()
       game.restart()
-      return this.player[0].credits
+      // return this.player[0].credits
     } else {
       setTimeout(function () { alert('It\'s a tie!') }, 1300)
+      // updateCredits()
       game.restart()
-      return this.player[0].credits
+      // return this.player[0].credits
     }
   }
 
@@ -100,14 +105,17 @@ displayCards(1,0,computerCards)
     if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21 && this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
       setTimeout(function () { alert('It\'s a tie!') }, 1300)
       displayCards(1,1,computerCards)
+      // updateCredits()
       game.restart()
     } else if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21) {
       setTimeout(function () { alert('You Won!') }, 1300)
       displayCards(1,1,computerCards)
+      // updateCredits()
       game.restart()
     } else if (this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
       setTimeout(function () { alert('Computer Won!') }, 1300)
       displayCards(1,1,computerCards)
+      // updateCredits()
       game.restart()
     }
 
@@ -123,7 +131,6 @@ displayCards(1,0,computerCards)
     this.name = name
     this.cards = [deal(), deal()]
     this.pass = false
-    this.credits = 1000
     this.cardscore = this.score()
   }
   var deal = function () { // general action of dealing
@@ -153,23 +160,34 @@ displayCards(1,0,computerCards)
     }.bind(this))
     if (this.cardscore > 21) {
         setTimeout(function () { alert('Computer Won!') }, 300)
-        this.credits = this.credits - this.betAmount
+        // console.log(this.credits +"credits")
+        // this.credits = this.credits - this.betAmount
+        // console.log(this.credits +"credits")
+        // console.log(this.betAmount +"amount")
+
+      // updateCredits()
       game.restart()
-      return this.credits}
+      // return this.credits}
+    }
   }
 
-  Player.prototype.bet = function (){
-
-  // var betAmount = prompt("What's your bet? You have "+this.credits +' credits currently');
-  //   while (betAmount > game.player[game.currentPlayer].credits ){
+  // function bet (){
+  //
+  // alert("What's your bet? You have "+ game.credits +' credits currently');
+  //   var betAmount = document.querySelector('input').value
+  //   while (betAmount > game.credits ){
   //     alert('Bet amount is more than what you currently have, please enter another bet amount.')
-  //     var betAmount = prompt("What's your bet?");
   //   }
-      // this.betAmount = betAmount
-
-  console.log('play game')
-
-  }
+  //   if (betAmount<game.credits && betAmount){
+  //     game.newGame()}
+  //     else{
+  //       alert("What's your bet? You have "+ game.credits +' credits currently')
+  //     }
+  //
+  //
+  // console.log('play game')
+  //
+  // }
 
   Player.prototype.score = function () {
     var arrayValue = this.cards.map(function (card) {
@@ -180,12 +198,6 @@ displayCards(1,0,computerCards)
     })
         this.cardscore = score
         return this.cardscore
-
-
-// if (this.cards.rank === 1 && score >21){
-    //     this.cardscore = score - 10
-    // }
-
 }
 
   function value (rank) {
@@ -237,18 +249,22 @@ displayCards(1,0,computerCards)
     game.switchPlayer()
   }
 
+// function updateCredits(){
+//   creditsLeft.innerHTML = 'Credits Left: '+ game.credits
+//   console.log(game.player[0])
+// }
 
   game.newGame()
-  console.log(game)
 
   buttonAdd.addEventListener('click', addCard)
   buttonPass.addEventListener('click', pass)
-  buttonBet.addEventListener('click', game.player[game.currentPlayer].bet())
+  // buttonBet.addEventListener('click', bet)
 
-  console.log(game.player[0].cards)
-  console.log(game.player[0].cardscore)
-  console.log(game.player[1].cards)
-  console.log(game.player[1].cardscore)
+  // console.log(game)
+  // console.log(game.player[0].cards)
+  // console.log(game.player[0].cardscore)
+  // console.log(game.player[1].cards)
+  // console.log(game.player[1].cardscore)
 
   //
   //
