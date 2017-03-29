@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
     buttonAdd.disabled = false
     for (var j = 1; j < 53; j++) {
       if (game.player[player].cards[num].card === j) {
-        div[num].setAttribute('style', "background-image: url('./assets/cards-img/" + j + '.png')
+            // div[num].setAttribute('style', "background-color: white")
+              // div[num].style.backgroundColor = 'white';
+            div[num].setAttribute('style', "background-image: url('./assets/cards-img/" + j + '.png')
       }
     }
   }
@@ -115,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21 && this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
       setTimeout(function () { alert('It\'s a tie!') }, 1300)
       displayCards(1, 1, computerCards)
+      computerCards[1].removeAttribute('id')
       updateCredits()
       game.restart()
       game.credits = game.credits
@@ -123,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (this.player[0].cards.length === 2 && this.player[0].cardscore === 21) {
       setTimeout(function () { alert('You Won!') }, 1300)
       displayCards(1, 1, computerCards)
+      computerCards[1].removeAttribute('id')
       game.credits = game.credits + game.betAmount
       updateCredits()
       game.restart()
@@ -131,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (this.player[1].cards.length === 2 && this.player[1].cardscore === 21) {
       setTimeout(function () { alert('Computer Won!') }, 1300)
       displayCards(1, 1, computerCards)
+      computerCards[1].removeAttribute('id')
       game.credits = game.credits - game.betAmount
       updateCredits()
       game.restart()
