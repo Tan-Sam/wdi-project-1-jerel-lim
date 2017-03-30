@@ -1,22 +1,70 @@
 *{
   box-sizing: border-box;
 }
+.instructions{
+  margin:0 auto;
+  /*background: blue;*/
+  width: 80%;
+  height: 78%;
+  display:flex;
+  background: rgba(120,50,40,1);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: space-around;
+  border: 3px solid black;
+}
+
+.objective{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  color: white;
+}
+.betting{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+
+}
+.betting div{
+  display: flex;
+  width: 100%;
+  justify-content: left;
+  align-items: flex-start;
+  flex-wrap: wrap;
+
+}
+
+li{
+  color: grey;
+  font-size: 18px;
+}
 
 body {
   height: 100vh;
   width:100vw;
   background: url('../img/table.png');
   background-size: cover;
-  background-position: center;
+  background-position:center;
 }
 
 h1{
-  color:white;
+  color:grey;
   position:relative;
   /*background-color:yellow;*/
   display: flex;
   justify-content: center;
   align-items: flex-start;
+}
+
+p{
+  text-align: left;
+
 }
 
 .container {
@@ -26,7 +74,7 @@ h1{
   height: 98%;
   /*text-align: center;*/
   position: relative;
-  /*display: flex;*/
+  display: none;
   justify-content: center;
   align-items: flex-start;
   /*flex-wrap: nowrap;*/
@@ -57,6 +105,23 @@ h1{
   flex-wrap: nowrap;
 }
 
+.chiparea{
+  position:relative;
+  width: 100%;
+  height: 30%;
+  /*display: flex;
+  justify-content: center;
+  align-items: flex-end;*/
+}
+
+.chips{
+  position:absolute;
+  background-image: url('../img/chip_black.gif');
+  background-size:cover;
+  width: 100px;
+  height: 100px;
+}
+
 .player1 {
   position:relative;
   width: 100%;
@@ -70,8 +135,8 @@ h1{
 }
 
 .cards {
-  width: 8%;
-  height: 45%;
+  width: 10%;
+  height: 75%;
   background-color: orange;
   border: 3px solid black;
   display: flex;
