@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var y = 38
     var x = 44.5
     var z = 0
-    for (i = 0; i < game.betAmount / 10; i++) {
+    for (var i = 0; i < game.betAmount / 10; i++) {
       var chiparea = document.querySelector('.chiparea')
       var newChip = document.createElement('div')
       newChip.classList.add('chips', 'newCards')

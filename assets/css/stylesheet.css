@@ -1,9 +1,9 @@
 *{
   box-sizing: border-box;
 }
+
 .instructions{
   margin:0 auto;
-  /*background: blue;*/
   width: 80%;
   height: 85%;
   display:flex;
@@ -63,26 +63,18 @@ h1{
   align-items: flex-start;
 }
 
-p{
-  text-align: left;
-}
-
 .container {
   margin:0 auto;
-  /*background: blue;*/
   width: 80%;
   height: 98%;
-  /*text-align: center;*/
   position: relative;
   display: none;
   justify-content: center;
   align-items: flex-start;
-  /*flex-wrap: nowrap;*/
 }
 
 .table {
   margin:0 auto;
-  /*background-color: red;*/
   width: 100%;
   height: 85%;
   position: relative;
@@ -90,15 +82,12 @@ p{
   justify-content: center;
   align-items: flex-end;
   flex-direction: column;
-  /*flex-wrap: nowrap;*/
 }
 
 .computer {
   position:relative;
-  /*background-color: green;*/
   width: 100%;
   height: 50%;
-  /*top: 9%;*/
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -109,9 +98,6 @@ p{
   position:relative;
   width: 100%;
   height: 30%;
-  /*display: flex;
-  justify-content: center;
-  align-items: flex-end;*/
 }
 
 .chips{
@@ -126,8 +112,6 @@ p{
   position:relative;
   width: 100%;
   height: 50%;
-  /*background-color: purple;*/
-  /*bottom:;*/
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -145,40 +129,42 @@ p{
   flex-wrap: nowrap;
   background-size:cover;
 }
-#hide{
-background-color: orange;
 
+#hide{
+  background-color: orange;
 }
+
 .controls {
-position:relative;
-width: 100%;
-height: 20%;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-wrap: nowrap;
+  position:relative;
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
 }
+
 input{
-   background-color: white;
+  background-color: white;
+  color:black;
+  font-family: Josefin Slab;
+  font-size: 20px;
+  border: 1px solid black;
+  margin: 0 0 0 20px;
+  padding: 5px 5px;
+  border-radius: 5px;
+  box-shadow: 2px 2px black;
+  text-align:center;
+}
+
+button {
+   background-color: yellow;
    color:black;
    font-family: Josefin Slab;
    font-size: 20px;
    border: 1px solid black;
-   margin: 0 0 0 20px;
-   padding: 5px 5px;
+   margin: 0;
+   padding: 5px 25px;
    border-radius: 5px;
    box-shadow: 2px 2px black;
-   text-align:center;
-}
-
-button {
- background-color: yellow;
- color:black;
- font-family: Josefin Slab;
- font-size: 20px;
- border: 1px solid black;
- margin: 0;
- padding: 5px 25px;
- border-radius: 5px;
- box-shadow: 2px 2px black;
 }
